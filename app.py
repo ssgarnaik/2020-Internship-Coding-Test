@@ -18,11 +18,9 @@ heading = "geo ip application "
 DEBUG = True
 app = Flask(__name__)
 app.config.from_object(__name__)
-app.config['SECRET_KEY'] = 'SjdnUends821Jsdlkvxh391ksdODnejdDw'
 
 class ReusableForm(Form):
     name = TextField('IP:', validators=[validators.required()])
-    surname = TextField('Surname:', validators=[validators.required()])
 
 client = MongoClient("mongodb://127.0.0.1:27017") #host uri
 db = client.newscraper #Select the database
