@@ -1,7 +1,9 @@
 # 2020-Internship-Coding-Test
 
-1.pip install pymongo
+1.pip install pymongo 
+
 2.pip install flask-simple-geoip
+
 3.brew tap mongodb/brew
 4.brew install mongodb-community@4.2
 5.brew services start mongodb-community@4.2
