@@ -1,0 +1,47 @@
+<html>
+<head>
+    <title>Stadia Maps + Flask + MongoDB Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/mapbox-gl/0.52.0/mapbox-gl.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/mapbox-gl/0.52.0/mapbox-gl.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='../static/styles/map.css') }}" />
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>
+        Stadia Maps + Flask + MongoDB Demo
+    </h1>
+    <div id="map"></div>
+    <script>
+     var map = new mapboxgl.Map({
+       container: 'map',
+       style: 'https://tiles.stadiamaps.com/styles/alidade_smooth.json',  // Theme URL; see our themes documentation for more options
+       center: [-75.144867, 39.952278],  // Initial focus coordinate
+       zoom: 16
+     });
+
+     mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.1/mapbox-gl-rtl-text.js');
+
+     // Add zoom and rotation controls to the map.
+     map.addControl(new mapboxgl.NavigationControl());
+
+     var mongoData = JSON.parse('{{ street_trees_points| tojson | safe }}');
+     var markerCollection = mongoData[0];
+
+        // Next, we can add markers to the map
+        markerCollection.features.forEach(function(point) {
+            var elem = document.createElement('div');
+            elem.className = 'marker';
+
+            // Now, we construct a marker and set it's coordinates from the GeoJSON. Note the coordinate order.
+            var marker = new mapboxgl.Marker(elem);
+            marker.setLngLat(point.geometry.coordinates);
+
+            // Finally, we add the marker to the map.
+            marker.addTo(map);
+        });
+    </script>
+</body>
+</html>
+      
