@@ -7,7 +7,7 @@ from wtforms import Form, TextField, TextAreaField, validators, StringField, Sub
 from time import ctime
 from random import randint
 from time import strftime
-import mongo_geoip_log
+import insert_geoip
 import subprocess
 import json
 from flask import Flask, render_template, flash, request
@@ -51,7 +51,7 @@ def hello():
             geo_ip = subprocess.check_output('curl http://api.ipstack.com/' + name +'?access_key=dce6a31122573ec9cb577a6d6882e6fe', shell=True)
             geo_ip = json.loads(geo_ip.decode('ascii'))
             geo_ip.update({'time': ctime(), 'request': name})
-            mongo_geoip_log.insert(geo_ip)
+            insert_geoip.insert(geo_ip)
 
         log_ip(request)
     return redirect("/list")
