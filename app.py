@@ -73,12 +73,11 @@ def update ():
 @app.route("/action3", methods=['POST'])
 def action3 ():
     #Updating a Task with various references
-    name=request.values.get("name")
-    desc=request.values.get("desc")
-    date=request.values.get("date")
-    pr=request.values.get("pr")
+    ip=request.values.get("ip")
+    city=request.values.get("city")
+    time=request.values.get("time")
     id=request.values.get("_id")
-    todos.update({"_id":ObjectId(id)}, {'$set':{ "name":name, "desc":desc, "date":date, "pr":pr }})
+    todos.update({"_id":ObjectId(id)}, {'$set':{ "ip":i, "desc":city, "date":time }})
     return redirect("/")
 
 @app.route("/search", methods=['GET'])
